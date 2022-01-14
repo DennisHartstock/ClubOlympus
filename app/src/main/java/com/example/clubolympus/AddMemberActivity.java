@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.clubolympus.data.ClubOlympusContract.MemberEntry;
+
 public class AddMemberActivity extends AppCompatActivity {
     private EditText nameEditText;
     private EditText surnameEditText;
@@ -40,16 +42,16 @@ public class AddMemberActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String selectedSex = (String) adapterView.getItemAtPosition(i);
 
-                if (selectedSex.equals("Female")) {
-                    sex = 1;
+                if (selectedSex.equals("Male")) {
+                    sex = MemberEntry._SEX_MALE;
                 } else {
-                    sex = 0;
+                    sex = MemberEntry._SEX_FEMALE;
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                sex = 0;
+                sex = MemberEntry._SEX_FEMALE;
             }
         });
     }

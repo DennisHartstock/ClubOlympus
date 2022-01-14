@@ -2,8 +2,8 @@
 <resources>
     
     <string-array name="array_sex">
-        <item>Male</item>
         <item>Female</item>
+        <item>Male</item>
     </string-array>
     
 </resources>
