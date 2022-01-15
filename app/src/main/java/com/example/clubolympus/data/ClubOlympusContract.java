@@ -26,7 +26,7 @@ public final class ClubOlympusContract {
         public static final String _NAME = "name";
         public static final String _SURNAME = "surname";
         public static final String _SEX = "sex";
-        public static final String _SPORT_GROUP = "sportGroup";
+        public static final String _SPORTS_GROUP = "sportsGroup";
         public static final int _SEX_FEMALE = 0;
         public static final int _SEX_MALE = 1;
 

@@ -4,6 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
+import android.annotation.SuppressLint;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.clubolympus.data.ClubOlympusContract.MemberEntry;
 
@@ -19,7 +24,7 @@ public class AddMemberActivity extends AppCompatActivity {
     private EditText nameEditText;
     private EditText surnameEditText;
     private Spinner sexSpinner;
-    private EditText groupEditText;
+    private EditText sportsGroupEditText;
     private int sex = 0;
     private ArrayAdapter spinnerAdapter;
 
@@ -31,13 +36,14 @@ public class AddMemberActivity extends AppCompatActivity {
         nameEditText = findViewById(R.id.nameEditText);
         surnameEditText = findViewById(R.id.surnameEditText);
         sexSpinner = findViewById(R.id.sexSpinner);
-        groupEditText = findViewById(R.id.groupEditText);
+        sportsGroupEditText = findViewById(R.id.sportsGroupEditText);
 
         spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.array_sex, android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sexSpinner.setAdapter(spinnerAdapter);
 
         sexSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String selectedSex = (String) adapterView.getItemAtPosition(i);
@@ -62,11 +68,13 @@ public class AddMemberActivity extends AppCompatActivity {
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
             case R.id.save_member:
+                insertMember();
                 return true;
             case R.id.delete_member:
                 return true;
@@ -76,4 +84,27 @@ public class AddMemberActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void insertMember() {
+        String name = nameEditText.getText().toString().trim();
+        String surname = surnameEditText.getText().toString().trim();
+        String sportsGroup = sportsGroupEditText.getText().toString().trim();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MemberEntry._NAME, name);
+        contentValues.put(MemberEntry._SURNAME, surname);
+        contentValues.put(MemberEntry._SPORTS_GROUP, sportsGroup);
+        contentValues.put(MemberEntry._SEX, sex);
+
+        ContentResolver contentResolver = getContentResolver();
+        Uri uri = contentResolver.insert(MemberEntry.CONTENT_URI, contentValues);
+
+        if (uri == null) {
+            Toast.makeText(this, "Insertion of data in the table failed", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Data saved", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
 }

@@ -20,7 +20,7 @@ public class ClubOlympusDbOpenHelper extends SQLiteOpenHelper {
                 + MemberEntry._NAME + "TEXT, "
                 + MemberEntry._SURNAME + "TEXT, "
                 + MemberEntry._SEX + "INTEGER NOT NULL, "
-                + MemberEntry._SPORT_GROUP + "TEXT)";
+                + MemberEntry._SPORTS_GROUP + "TEXT)";
         sqLiteDatabase.execSQL(CREATE_MEMBERS_TABLE);
     }
 
