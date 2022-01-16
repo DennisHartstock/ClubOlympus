@@ -46,7 +46,7 @@ public class ClubOlympusContentProvider extends ContentProvider {
                 break;
 
             case MEMBER_ID_CODE:
-                s = MemberEntry._ID + "=?";
+                s = MemberEntry.COLUMN_ID + "=?";
                 strings1 = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 cursor = database.query(MemberEntry.TABLE_NAME, strings, s, strings1, null, null, s1);
                 break;
@@ -55,7 +55,7 @@ public class ClubOlympusContentProvider extends ContentProvider {
                 Toast.makeText(getContext(), "Incorrect Uri", Toast.LENGTH_LONG).show();
                 throw new IllegalArgumentException("Can't query incorrect Uri " + uri);
         }
-
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 
@@ -82,7 +82,6 @@ public class ClubOlympusContentProvider extends ContentProvider {
             return ContentUris.withAppendedId(uri, id);
         }
         throw new IllegalArgumentException("Insertion of data in the table failed for " + uri);
-
     }
 
     @Override

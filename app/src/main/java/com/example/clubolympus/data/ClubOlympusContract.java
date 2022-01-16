@@ -4,8 +4,8 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 public final class ClubOlympusContract {
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME ="clubOlympusDb";
+    public static final int DATABASE_VERSION = 001;
+    public static final String DATABASE_NAME ="clubOlympusDB";
 
     public static final String SCHEME = "content://";
     public static final String AUTHORITY = "com.example.clubolympus";
@@ -22,15 +22,13 @@ public final class ClubOlympusContract {
 
         public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_MEMBERS);
 
-        public static final String _ID = BaseColumns._ID;
-        public static final String _NAME = "name";
-        public static final String _SURNAME = "surname";
-        public static final String _SEX = "sex";
-        public static final String _SPORTS_GROUP = "sportsGroup";
-        public static final int _SEX_FEMALE = 0;
-        public static final int _SEX_MALE = 1;
-
+        public static final String COLUMN_ID = BaseColumns._ID;
+        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_SURNAME = "surname";
+        public static final String COLUMN_SEX = "sex";
+        public static final String COLUMN_SPORTS_GROUP = "sportsGroup";
+        public static final int SEX_FEMALE_CODE = 0;
+        public static final int SEX_MALE_CODE = 1;
     }
-
 
 }

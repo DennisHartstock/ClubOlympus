@@ -16,11 +16,11 @@ public class ClubOlympusDbOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String CREATE_MEMBERS_TABLE = "CREATE TABLE " + MemberEntry.TABLE_NAME + "("
-                + MemberEntry._ID + " INTEGER PRIMARY KEY, "
-                + MemberEntry._NAME + "TEXT, "
-                + MemberEntry._SURNAME + "TEXT, "
-                + MemberEntry._SEX + "INTEGER NOT NULL, "
-                + MemberEntry._SPORTS_GROUP + "TEXT)";
+                + MemberEntry.COLUMN_ID + " INTEGER PRIMARY KEY,"
+                + MemberEntry.COLUMN_NAME + " TEXT,"
+                + MemberEntry.COLUMN_SURNAME + " TEXT,"
+                + MemberEntry.COLUMN_SEX + " INTEGER NOT NULL,"
+                + MemberEntry.COLUMN_SPORTS_GROUP + " TEXT" + ")";
         sqLiteDatabase.execSQL(CREATE_MEMBERS_TABLE);
     }
 

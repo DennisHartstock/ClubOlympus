@@ -49,15 +49,15 @@ public class AddMemberActivity extends AppCompatActivity {
                 String selectedSex = (String) adapterView.getItemAtPosition(i);
 
                 if (selectedSex.equals("Male")) {
-                    sex = MemberEntry._SEX_MALE;
+                    sex = MemberEntry.SEX_MALE_CODE;
                 } else {
-                    sex = MemberEntry._SEX_FEMALE;
+                    sex = MemberEntry.SEX_FEMALE_CODE;
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                sex = MemberEntry._SEX_FEMALE;
+                sex = MemberEntry.SEX_FEMALE_CODE;
             }
         });
     }
@@ -91,10 +91,10 @@ public class AddMemberActivity extends AppCompatActivity {
         String sportsGroup = sportsGroupEditText.getText().toString().trim();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MemberEntry._NAME, name);
-        contentValues.put(MemberEntry._SURNAME, surname);
-        contentValues.put(MemberEntry._SPORTS_GROUP, sportsGroup);
-        contentValues.put(MemberEntry._SEX, sex);
+        contentValues.put(MemberEntry.COLUMN_NAME, name);
+        contentValues.put(MemberEntry.COLUMN_SURNAME, surname);
+        contentValues.put(MemberEntry.COLUMN_SPORTS_GROUP, sportsGroup);
+        contentValues.put(MemberEntry.COLUMN_SEX, sex);
 
         ContentResolver contentResolver = getContentResolver();
         Uri uri = contentResolver.insert(MemberEntry.CONTENT_URI, contentValues);
