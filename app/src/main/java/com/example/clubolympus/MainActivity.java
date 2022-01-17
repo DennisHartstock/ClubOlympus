@@ -48,18 +48,18 @@ public class MainActivity extends AppCompatActivity {
         dataTextView.append(MemberEntry.COLUMN_ID + " " + MemberEntry.COLUMN_NAME + " " + MemberEntry.COLUMN_SURNAME + " "
                 + MemberEntry.COLUMN_SEX + " " + MemberEntry.COLUMN_SPORTS_GROUP);
 
-        int idIndex = cursor.getColumnIndex(MemberEntry.COLUMN_ID);
-        int nameIndex = cursor.getColumnIndex(MemberEntry.COLUMN_NAME);
-        int surnameIndex = cursor.getColumnIndex(MemberEntry.COLUMN_SURNAME);
-        int sexIndex = cursor.getColumnIndex(MemberEntry.COLUMN_SEX);
-        int sportsGroupIndex = cursor.getColumnIndex(MemberEntry.COLUMN_SPORTS_GROUP);
+        int idColumnIndex = cursor.getColumnIndex(MemberEntry.COLUMN_ID);
+        int nameColumnIndex = cursor.getColumnIndex(MemberEntry.COLUMN_NAME);
+        int surnameColumnIndex = cursor.getColumnIndex(MemberEntry.COLUMN_SURNAME);
+        int sexColumnIndex = cursor.getColumnIndex(MemberEntry.COLUMN_SEX);
+        int sportsGroupColumnIndex = cursor.getColumnIndex(MemberEntry.COLUMN_SPORTS_GROUP);
 
         while (cursor.moveToNext()) {
-            int currentId = cursor.getInt(idIndex);
-            String currentName = cursor.getString(nameIndex);
-            String currentSurname = cursor.getString(surnameIndex);
-            int currentSex = cursor.getInt(sexIndex);
-            String currentSportsGroup = cursor.getString(sportsGroupIndex);
+            int currentId = cursor.getInt(idColumnIndex);
+            String currentName = cursor.getString(nameColumnIndex);
+            String currentSurname = cursor.getString(surnameColumnIndex);
+            int currentSex = cursor.getInt(sexColumnIndex);
+            String currentSportsGroup = cursor.getString(sportsGroupColumnIndex);
 
             dataTextView.append("\n" + currentId + " " + currentName + " " + currentSurname + " "
                     + currentSex + " " + currentSportsGroup);
