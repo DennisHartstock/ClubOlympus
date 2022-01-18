@@ -32,6 +32,25 @@ public class ClubOlympusContentProvider extends ContentProvider {
         return true;
     }
 
+    private void checkInput(Uri uri, ContentValues contentValues) {
+
+        String name = contentValues.getAsString(MemberEntry.COLUMN_NAME);
+        if (name.equals("")) {
+            throw new IllegalArgumentException("Input name");
+        }
+
+        String surname = contentValues.getAsString(MemberEntry.COLUMN_SURNAME);
+        if (surname.equals("")) {
+            throw new IllegalArgumentException("Input surname");
+        }
+
+        String sportsGroup = contentValues.getAsString(MemberEntry.COLUMN_SPORTS_GROUP);
+        if (sportsGroup.equals("")) {
+            throw new IllegalArgumentException("Input sports group");
+        }
+
+    }
+
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String s,
@@ -62,12 +81,28 @@ public class ClubOlympusContentProvider extends ContentProvider {
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
-        return null;
+        int match = uriMatcher.match(uri);
+
+        switch (match) {
+            case MEMBERS_CODE:
+                return MemberEntry.CONTENT_MULTIPLE_ITEMS;
+
+            case MEMBER_ID_CODE:
+                return MemberEntry.CONTENT_SINGLE_ITEM;
+
+            default:
+                Toast.makeText(getContext(), "Unknown Uri", Toast.LENGTH_LONG).show();
+                throw new IllegalArgumentException("Unknown Uri: " + uri);
+        }
+
     }
 
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
+
+        //checkInput(uri, contentValues);
+
         SQLiteDatabase database = clubOlympusDbOpenHelper.getWritableDatabase();
         int match = uriMatcher.match(uri);
 
@@ -99,7 +134,7 @@ public class ClubOlympusContentProvider extends ContentProvider {
                 return database.delete(MemberEntry.TABLE_NAME, s, strings);
 
             default:
-                Toast.makeText(getContext(), "Incorrect Uri", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Can't delete this Uri", Toast.LENGTH_LONG).show();
                 throw new IllegalArgumentException("Can't delete this Uri " + uri);
         }
 
@@ -107,6 +142,19 @@ public class ClubOlympusContentProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
+
+        /*if (contentValues.containsKey(MemberEntry.COLUMN_NAME)) {
+            checkInput(uri, contentValues);
+        }
+
+        if (contentValues.containsKey(MemberEntry.COLUMN_SURNAME)) {
+            checkInput(uri, contentValues);
+        }
+
+        if (contentValues.containsKey(MemberEntry.COLUMN_SPORTS_GROUP)) {
+            checkInput(uri, contentValues);
+        }*/
+
         SQLiteDatabase database = clubOlympusDbOpenHelper.getWritableDatabase();
         int match = uriMatcher.match(uri);
 
@@ -120,9 +168,10 @@ public class ClubOlympusContentProvider extends ContentProvider {
                 return database.update(MemberEntry.TABLE_NAME, contentValues, s, strings);
 
             default:
-                Toast.makeText(getContext(), "Incorrect Uri", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Can't update this Uri", Toast.LENGTH_LONG).show();
                 throw new IllegalArgumentException("Can't update this Uri " + uri);
         }
 
     }
+
 }

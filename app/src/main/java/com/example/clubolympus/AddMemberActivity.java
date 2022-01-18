@@ -101,6 +101,8 @@ public class AddMemberActivity extends AppCompatActivity {
 
         if (uri == null) {
             Toast.makeText(this, "Insertion of data in the table failed", Toast.LENGTH_LONG).show();
+        } else if (name.equals("") || surname.equals("")||sportsGroup.equals("")) {
+            Toast.makeText(this, "Input data", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "Data saved", Toast.LENGTH_LONG).show();
         }

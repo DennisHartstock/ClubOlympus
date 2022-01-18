@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
 import com.example.clubolympus.data.ClubOlympusContract.MemberEntry;
 
 public class ClubOlympusDbOpenHelper extends SQLiteOpenHelper {
