@@ -113,7 +113,7 @@ public class ClubOlympusContentProvider extends ContentProvider {
                 Log.e("insertMethod", "Insertion of data in the table failed for " + uri);
                 return null;
             }
-
+            getContext().getContentResolver().notifyChange(uri, null);
             return ContentUris.withAppendedId(uri, id);
         }
         throw new IllegalArgumentException("Insertion of data in the table failed for " + uri);
@@ -123,21 +123,28 @@ public class ClubOlympusContentProvider extends ContentProvider {
     public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
         SQLiteDatabase database = clubOlympusDbOpenHelper.getWritableDatabase();
         int match = uriMatcher.match(uri);
+        int rowsDeleted;
 
         switch (match) {
             case MEMBERS_CODE:
-                return database.delete(MemberEntry.TABLE_NAME, s, strings);
+                rowsDeleted = database.delete(MemberEntry.TABLE_NAME, s, strings);
+                break;
 
             case MEMBER_ID_CODE:
                 s = MemberEntry.COLUMN_ID + "=?";
                 strings = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                return database.delete(MemberEntry.TABLE_NAME, s, strings);
+                rowsDeleted = database.delete(MemberEntry.TABLE_NAME, s, strings);
+                break;
 
             default:
                 Toast.makeText(getContext(), "Can't delete this Uri", Toast.LENGTH_LONG).show();
                 throw new IllegalArgumentException("Can't delete this Uri " + uri);
         }
 
+        if (rowsDeleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsDeleted;
     }
 
     @Override
@@ -157,21 +164,27 @@ public class ClubOlympusContentProvider extends ContentProvider {
 
         SQLiteDatabase database = clubOlympusDbOpenHelper.getWritableDatabase();
         int match = uriMatcher.match(uri);
+        int rowsUpdated;
 
         switch (match) {
             case MEMBERS_CODE:
-                return database.update(MemberEntry.TABLE_NAME, contentValues, s, strings);
+                rowsUpdated = database.update(MemberEntry.TABLE_NAME, contentValues, s, strings);
+                break;
 
             case MEMBER_ID_CODE:
                 s = MemberEntry.COLUMN_ID + "=?";
                 strings = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                return database.update(MemberEntry.TABLE_NAME, contentValues, s, strings);
+                rowsUpdated = database.update(MemberEntry.TABLE_NAME, contentValues, s, strings);
+                break;
 
             default:
                 Toast.makeText(getContext(), "Can't update this Uri", Toast.LENGTH_LONG).show();
                 throw new IllegalArgumentException("Can't update this Uri " + uri);
         }
-
+        if (rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsUpdated;
     }
 
 }
