@@ -1,7 +1,9 @@
 package com.example.clubolympus;
 
+import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -38,6 +40,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         memberCursorAdapter = new MemberCursorAdapter(this, null, false);
         dataListView.setAdapter(memberCursorAdapter);
 
+        dataListView.setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent = new Intent(MainActivity.this, AddMemberActivity.class);
+            Uri currentMemberUri = ContentUris.withAppendedId(MemberEntry.CONTENT_URI, l);
+            intent.setData(currentMemberUri);
+            startActivity(intent);
+        });
+
         LoaderManager.getInstance(this).initLoader(MEMBER_LOADER, null, this);
     }
 
@@ -47,9 +56,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         String[] projection = {MemberEntry.COLUMN_ID, MemberEntry.COLUMN_NAME, MemberEntry.COLUMN_SURNAME,
                 MemberEntry.COLUMN_SEX, MemberEntry.COLUMN_SPORTS_GROUP};
 
-        CursorLoader cursorLoader = new CursorLoader(this, MemberEntry.CONTENT_URI, projection,
+        return new CursorLoader(this, MemberEntry.CONTENT_URI, projection,
                 null, null, null);
-        return cursorLoader;
     }
 
     @Override

@@ -32,25 +32,6 @@ public class ClubOlympusContentProvider extends ContentProvider {
         return true;
     }
 
-    private void checkInput(Uri uri, ContentValues contentValues) {
-
-        String name = contentValues.getAsString(MemberEntry.COLUMN_NAME);
-        if (name.equals("")) {
-            throw new IllegalArgumentException("Input name");
-        }
-
-        String surname = contentValues.getAsString(MemberEntry.COLUMN_SURNAME);
-        if (surname.equals("")) {
-            throw new IllegalArgumentException("Input surname");
-        }
-
-        String sportsGroup = contentValues.getAsString(MemberEntry.COLUMN_SPORTS_GROUP);
-        if (sportsGroup.equals("")) {
-            throw new IllegalArgumentException("Input sports group");
-        }
-
-    }
-
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String s,
@@ -149,19 +130,6 @@ public class ClubOlympusContentProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
-
-        /*if (contentValues.containsKey(MemberEntry.COLUMN_NAME)) {
-            checkInput(uri, contentValues);
-        }
-
-        if (contentValues.containsKey(MemberEntry.COLUMN_SURNAME)) {
-            checkInput(uri, contentValues);
-        }
-
-        if (contentValues.containsKey(MemberEntry.COLUMN_SPORTS_GROUP)) {
-            checkInput(uri, contentValues);
-        }*/
-
         SQLiteDatabase database = clubOlympusDbOpenHelper.getWritableDatabase();
         int match = uriMatcher.match(uri);
         int rowsUpdated;
